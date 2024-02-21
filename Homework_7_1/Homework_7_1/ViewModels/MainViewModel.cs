@@ -17,24 +17,9 @@ namespace Homework_7_1.ViewModels
         }
         public ICommand RefreshStudentsCommand { get; set; }
 
-        private string _test = "XXX";
-            
-        public string Test
-        {
-            get { return _test; }
-            set 
-            {
-                _test = value;
-                OnPropertyChanged();
-            }
-        }
-
-
         private void RefreshStudents(object obj)
         {
-            //MessageBox.Show("RefreshStudnets");
-            //Test = "sss";
-            MessageBox.Show(Test);
+
         }
 
         private bool CanRefreshStudents(object obj)

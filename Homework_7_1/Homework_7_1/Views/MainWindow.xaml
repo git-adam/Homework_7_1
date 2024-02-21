@@ -22,10 +22,8 @@
             <ComboBox Height="25" Width="150" Margin="5"/>
             <Button Command="{Binding RefreshStudentsCommand}"  Content="Odśwież" Height="25" Width="100" Margin="5"/>
 
-            <TextBox Text="{Binding Test, Mode=OneWayToSource}" Height="25" Width="100" Margin="5"/>
-
-
-
+            
+            <!--<TextBox Text="{Binding Test, Mode=OneWayToSource}" Height="25" Width="100" Margin="5"/>-->
             <!--<Button Style="{StaticResource btnRefreshStyle}" Content="Odśwież" Height="25" Width="100" Margin="5"/>
             <Button >
                 <Button.Content>
