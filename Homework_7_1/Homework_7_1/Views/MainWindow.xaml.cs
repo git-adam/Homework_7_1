@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using Homework_7_1.ViewModels;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,58 +25,7 @@ namespace Homework_7_1.Views
         public MainWindow()
         {
             InitializeComponent();
-            Mammal mammal = new Mammal();
-            Fish fish = new Fish();
-
-
-
-            fish.Name = "RYBA";
-            mammal.Name = "SSAK";
-
-            fish.Swim();
-            mammal.Run();
-            
-        }
-
-    }
-
-  public class Animal
-{
-	public string Name
-    {
-        get
-        {
-            return Name;
-        }
-        set
-        {
-            this.Name = value;
+            DataContext = new MainViewModel();
         }
     }
-
-    public void Breathe()
-    {
-        Console.WriteLine($"{Name} - Oddycham!");
-    }
-
-}
-
-
-
- class Mammal : Animal
-{
-    public void Run()
-    {
-        Console.WriteLine($"{Name} - Biegnę!");
-    }
-}
-
-class Fish : Animal
-{
-    public void Swim()
-    {
-        Console.WriteLine($"{Name} - Płynę!");
-    }
-}
-
 }

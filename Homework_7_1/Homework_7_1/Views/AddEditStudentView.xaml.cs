@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using Homework_7_1.ViewModels;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace Homework_7_1.Views
         public AddEditStudent()
         {
             InitializeComponent();
+            DataContext = new AddEditStudentViewModel();
         }
     }
 }

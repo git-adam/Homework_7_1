@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Homework_7_1.ViewModels
 {
-    public class AddEditStudentViewModel
+    public class AddEditStudentViewModel : ViewModelBase
     {
     }
 }
