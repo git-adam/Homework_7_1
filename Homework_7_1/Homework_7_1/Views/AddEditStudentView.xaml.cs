@@ -1,4 +1,5 @@
 ﻿using Homework_7_1.Models;
+using Homework_7_1.Models.Wrappers;
 using Homework_7_1.ViewModels;
 using MahApps.Metro.Controls;
 using System;
@@ -22,7 +23,7 @@ namespace Homework_7_1.Views
     /// </summary>
     public partial class AddEditStudentView : MetroWindow
     {
-        public AddEditStudentView(Student student = null)
+        public AddEditStudentView(StudentWrapper student = null)
         {
             InitializeComponent();
             DataContext = new AddEditStudentViewModel(student);
