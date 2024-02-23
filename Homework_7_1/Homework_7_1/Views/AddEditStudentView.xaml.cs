@@ -1,4 +1,5 @@
-﻿using Homework_7_1.ViewModels;
+﻿using Homework_7_1.Models;
+using Homework_7_1.ViewModels;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
@@ -19,12 +20,12 @@ namespace Homework_7_1.Views
     /// <summary>
     /// Interaction logic for AddEditStudent.xaml
     /// </summary>
-    public partial class AddEditStudent : MetroWindow
+    public partial class AddEditStudentView : MetroWindow
     {
-        public AddEditStudent()
+        public AddEditStudentView(Student student = null)
         {
             InitializeComponent();
-            DataContext = new AddEditStudentViewModel();
+            DataContext = new AddEditStudentViewModel(student);
         }
     }
 }

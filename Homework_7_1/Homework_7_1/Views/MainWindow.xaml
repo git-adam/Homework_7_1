@@ -16,9 +16,29 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <Button Content="Dodaj" Height="25" Width="100" Margin="5"/>
-            <Button Content="Edytuj" Height="25" Width="100" Margin="5"/>
-            <Button Content="Usuń" Height="25" Width="100" Margin="5"/>
+            
+            <Button
+                Command="{Binding AddStudentCommand}"
+                Content="Dodaj"
+                Height="25"
+                Width="100"
+                Margin="5"/>
+            
+            <Button 
+                Command="{Binding EditStudentCommand}"
+                CommandParameter="{Binding SelectedStudent}"
+                Content="Edytuj"
+                Height="25"
+                Width="100"
+                Margin="5"/>
+            
+            <Button
+                Command="{Binding DeleteStudentCommand}"
+                Content="Usuń"
+                Height="25"
+                Width="100"
+                Margin="5"/>
+            
             <ComboBox
                 Height="25"
                 Width="150"
@@ -28,7 +48,13 @@
                 DisplayMemberPath="Name"
                 SelectedValuePath="Id"
                 />
-            <Button Command="{Binding RefreshStudentsCommand}"  Content="Odśwież" Height="25" Width="100" Margin="5"/>
+            
+            <Button
+                Command="{Binding RefreshStudentsCommand}"
+                Content="Odśwież"
+                Height="25"
+                Width="100"
+                Margin="5"/>
 
             
             <!--<TextBox Text="{Binding Test, Mode=OneWayToSource}" Height="25" Width="100" Margin="5"/>-->
@@ -50,8 +76,7 @@
             CanUserAddRows="False"
             IsReadOnly="True"
             SelectionMode="Single"
-            AutoGenerateColumns="False"
-            >
+            AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden" />
                 <DataGridTextColumn Binding="{Binding FirstName}" Header="Imię"/>
