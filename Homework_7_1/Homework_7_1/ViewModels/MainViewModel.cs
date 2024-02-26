@@ -1,5 +1,6 @@
 ﻿using Homework_7_1.Commands;
 using Homework_7_1.Models;
+using Homework_7_1.Models.Domains;
 using Homework_7_1.Models.Wrappers;
 using Homework_7_1.Views;
 using MahApps.Metro.Controls;
@@ -17,12 +18,13 @@ namespace Homework_7_1.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        private Repository _repository = new Repository();
         public MainViewModel()
         {
-            using (var context = new ApplicationDbContext())
-            {
-                var students = context.Students.ToList();
-            }
+            //using (var context = new ApplicationDbContext())
+            //{
+            //    var students = context.Students.ToList();
+            //}
 
             AddStudentCommand = new RelayCommand(AddEditStudent);
             EditStudentCommand = new RelayCommand(AddEditStudent, CanEditDeleteStudent);
@@ -75,9 +77,9 @@ namespace Homework_7_1.ViewModels
             }
         }
 
-        private ObservableCollection<GroupWrapper> _groups;
+        private ObservableCollection<Group> _groups;
 
-        public ObservableCollection<GroupWrapper> Groups
+        public ObservableCollection<Group> Groups
         {
             get { return _groups; }
             set
@@ -110,6 +112,7 @@ namespace Homework_7_1.ViewModels
                 return;
 
             //usuwanie ucznia z bazy danych
+            _repository.DeleteStudent(SelectedStudent.Id);
 
             RefreshDiary();
         }
@@ -125,42 +128,19 @@ namespace Homework_7_1.ViewModels
 
         private void InitGroups()
         {
-            Groups = new ObservableCollection<GroupWrapper>()
-            {
-                new GroupWrapper() {Id = 0, Name = "Wszystkie"},
-                new GroupWrapper() {Id = 1, Name = "1A"},
-                new GroupWrapper() {Id = 2, Name = "2A"}
-            };
+            var groups = _repository.GetGroups();
+            groups.Insert(0, new Group() { Id = 0, Name = "Wszystkie" });
+
+
+            Groups = new ObservableCollection<Group>(groups);
 
             SelectedGroupId = 0;
         }
 
         private void RefreshDiary()
         {
-            Students = new ObservableCollection<StudentWrapper>
-            {
-                new StudentWrapper()
-                {
-                    FirstName = "Kazimierz",
-                    LastName = "Nowak",
-                    Group = new GroupWrapper() { Id = 1 },
-                },
+            Students = new ObservableCollection<StudentWrapper>(_repository.GetStudents(SelectedGroupId));
 
-                new StudentWrapper()
-                {
-                    FirstName = "Marek",
-                    LastName = "Gaweł",
-                    Group = new GroupWrapper() { Id = 2 },
-                },
-
-                new StudentWrapper()
-                {
-                    FirstName = "Jacek",
-                    LastName = "Sztaba",
-                    Group = new GroupWrapper() { Id = 1 },
-                },
-
-            };
         }
 
 

@@ -87,15 +87,30 @@
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Commands\AsyncRelayCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Migrations\202402231528145_InitialCreate.cs" />
+    <Compile Include="Migrations\202402231528145_InitialCreate.Designer.cs">
+      <DependentUpon>202402231528145_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402231656369_SetFirstNameMaxLengthAndRequiredInStudnetsTable.cs" />
+    <Compile Include="Migrations\202402231656369_SetFirstNameMaxLengthAndRequiredInStudnetsTable.Designer.cs">
+      <DependentUpon>202402231656369_SetFirstNameMaxLengthAndRequiredInStudnetsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402231842268_SetLastNameMaxLengthAndRequiredInStudnetsTable.cs" />
+    <Compile Include="Migrations\202402231842268_SetLastNameMaxLengthAndRequiredInStudnetsTable.Designer.cs">
+      <DependentUpon>202402231842268_SetLastNameMaxLengthAndRequiredInStudnetsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Configurations\GroupConfiguration.cs" />
     <Compile Include="Models\Configurations\RatingConfiguration.cs" />
     <Compile Include="Models\Configurations\StudentConfiguration.cs" />
+    <Compile Include="Models\Converters\StudentConverter.cs" />
     <Compile Include="Models\Subject.cs" />
     <Compile Include="Models\Domains\Group.cs" />
     <Compile Include="Models\Domains\Rating.cs" />
     <Compile Include="Models\Domains\Student.cs" />
     <Compile Include="Models\Wrappers\GroupWrapper.cs" />
     <Compile Include="Models\Wrappers\StudentWrapper.cs" />
+    <Compile Include="Repository.cs" />
     <Compile Include="ViewModels\AddEditStudentViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -129,6 +144,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202402231528145_InitialCreate.resx">
+      <DependentUpon>202402231528145_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402231656369_SetFirstNameMaxLengthAndRequiredInStudnetsTable.resx">
+      <DependentUpon>202402231656369_SetFirstNameMaxLengthAndRequiredInStudnetsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402231842268_SetLastNameMaxLengthAndRequiredInStudnetsTable.resx">
+      <DependentUpon>202402231842268_SetLastNameMaxLengthAndRequiredInStudnetsTable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -142,8 +166,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Models\Converters\" />
+    <Content Include="DbScripts\202402231842268_SetLastNameMaxLengthAndRequiredInStudnetsTable.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

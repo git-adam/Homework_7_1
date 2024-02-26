@@ -1,5 +1,6 @@
 ﻿using Homework_7_1.Commands;
 using Homework_7_1.Models;
+using Homework_7_1.Models.Domains;
 using Homework_7_1.Models.Wrappers;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace Homework_7_1.ViewModels
 {
     public class AddEditStudentViewModel : ViewModelBase
     {
+
+        private Repository _repository = new Repository();
         public AddEditStudentViewModel(StudentWrapper student = null)
         {
 
@@ -71,9 +74,9 @@ namespace Homework_7_1.ViewModels
             }
         }
 
-        private ObservableCollection<GroupWrapper> _groups;
+        private ObservableCollection<Group> _groups;
 
-        public ObservableCollection<GroupWrapper> Groups
+        public ObservableCollection<Group> Groups
         {
             get { return _groups; }
             set
@@ -88,18 +91,22 @@ namespace Homework_7_1.ViewModels
 
         private void InitGroups()
         {
-            Groups = new ObservableCollection<GroupWrapper>()
-            {
-                new GroupWrapper() {Id = 0, Name = "-- brak --"},
-                new GroupWrapper() {Id = 1, Name = "1A"},
-                new GroupWrapper() {Id = 2, Name = "2A"}
-            };
+            var groups = _repository.GetGroups();
+            groups.Insert(0, new Group() { Id = 0, Name = "-- brak --" });
 
-            Student.Group.Id = 0;
+
+            Groups = new ObservableCollection<Group>(groups);
+
+            SelectedGroupId = Student.Group.Id;
         }
 
         private void Confirm(object obj)
         {
+            if (!Student.IsValid)
+            {
+                return;
+            }
+
             if (!IsUpdate)
                 AddStudent();
             else
@@ -112,11 +119,13 @@ namespace Homework_7_1.ViewModels
         private void UpdateStudent()
         {
             //baza danych
+            _repository.UpdateStudent(Student);
         }
 
         private void AddStudent()
         {
             //baza danych
+            _repository.AddStudent(Student);
         }
 
         private void Close(object obj)
