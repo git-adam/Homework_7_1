@@ -76,6 +76,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\UserSettings.cs" />
+    <Compile Include="ViewModels\SetConnectionStringViewModel.cs" />
+    <Compile Include="Views\SetConnectionStringView.xaml.cs">
+      <DependentUpon>SetConnectionStringView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\AddEditStudentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -129,6 +134,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SetConnectionStringView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -169,6 +178,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="DbScripts\202402231842268_SetLastNameMaxLengthAndRequiredInStudnetsTable.sql" />
+    <SplashScreen Include="Photos\loading.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

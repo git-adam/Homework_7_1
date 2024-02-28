@@ -1,15 +1,19 @@
 using Homework_7_1.Models.Configurations;
 using Homework_7_1.Models.Domains;
-using System;
+using Homework_7_1.Properties;
 using System.Data.Entity;
-using System.Linq;
 
 namespace Homework_7_1
 {
     public class ApplicationDbContext : DbContext
     {
+        public static string _connectionString = 
+            $@"Server={Settings.Default.ServerAddress}{Settings.Default.ServerName};
+            Database={Settings.Default.DatabaseName};
+            User Id={Settings.Default.DatabaseLogin};
+            Password={Settings.Default.DatabasePassword}";
         public ApplicationDbContext()
-            : base("name=ApplicationDbContext")
+            : base(_connectionString)
         {
         }
 

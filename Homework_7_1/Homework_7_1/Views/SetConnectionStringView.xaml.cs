@@ -1,5 +1,4 @@
-﻿using Homework_7_1.Properties;
-using Homework_7_1.ViewModels;
+﻿using Homework_7_1.ViewModels;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
@@ -13,20 +12,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Homework_7_1.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SetConnectionStringView.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class SetConnectionStringView : MetroWindow
     {
-        public MainWindow()
+        public SetConnectionStringView(bool canCloseWindow)
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = new SetConnectionStringViewModel(canCloseWindow);
         }
     }
 }

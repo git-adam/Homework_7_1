@@ -19,11 +19,8 @@ namespace Homework_7_1.ViewModels
         private Repository _repository = new Repository();
         public AddEditStudentViewModel(StudentWrapper student = null)
         {
-
             CloseCommand = new RelayCommand(Close);
             ConfirmCommand = new RelayCommand(Confirm);
-
-            //throw new Exception("BŁĄD");
 
             if (student == null)
             {
@@ -94,7 +91,6 @@ namespace Homework_7_1.ViewModels
             var groups = _repository.GetGroups();
             groups.Insert(0, new Group() { Id = 0, Name = "-- brak --" });
 
-
             Groups = new ObservableCollection<Group>(groups);
 
             SelectedGroupId = Student.Group.Id;
@@ -111,7 +107,6 @@ namespace Homework_7_1.ViewModels
                 AddStudent();
             else
                 UpdateStudent();
-
 
             CloseWindow(obj as Window);
         }

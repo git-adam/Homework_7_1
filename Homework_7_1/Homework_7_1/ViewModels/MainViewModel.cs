@@ -21,25 +21,22 @@ namespace Homework_7_1.ViewModels
         private Repository _repository = new Repository();
         public MainViewModel()
         {
-            //using (var context = new ApplicationDbContext())
-            //{
-            //    var students = context.Students.ToList();
-            //}
-
             AddStudentCommand = new RelayCommand(AddEditStudent);
             EditStudentCommand = new RelayCommand(AddEditStudent, CanEditDeleteStudent);
             DeleteStudentCommand = new AsyncRelayCommand(DeleteStudent, CanEditDeleteStudent);
             RefreshStudentsCommand = new RelayCommand(RefreshStudents);
+            SetConnectionStringCommand = new RelayCommand(SetConnectionString);
+            LoadedWindowCommand = new RelayCommand(LoadedWindow);
 
-            RefreshDiary();
-
-            InitGroups();
-
+            LoadedWindow(null);
         }
+
         public ICommand AddStudentCommand { get; set; }
         public ICommand EditStudentCommand { get; set; }
         public ICommand DeleteStudentCommand { get; set; }
         public ICommand RefreshStudentsCommand { get; set; }
+        public ICommand SetConnectionStringCommand { get; set; }
+        public ICommand LoadedWindowCommand { get; set; }
 
         private StudentWrapper _selectedStudent;
 
@@ -125,6 +122,44 @@ namespace Homework_7_1.ViewModels
             return SelectedStudent != null;
         }
 
+        private void SetConnectionString(object obj)
+        {
+            var setConnectionStringWindow = new SetConnectionStringView(true); //Nie jest to dobra praktyka, stosuje się mechanizm DEPENDENCY INJECTION
+            setConnectionStringWindow.Closed += SetConnectionStringWindow_Closed;
+            setConnectionStringWindow.ShowDialog();
+        }
+
+        private void SetConnectionStringWindow_Closed(object sender, EventArgs e)
+        {
+            RefreshDiary(); // Czy to wszystko?
+        }
+
+        private async void LoadedWindow(object obj)
+        {
+            if (!IsDatabaseConnectionPossible())
+            {
+                var metroWindow = Application.Current.MainWindow as MetroWindow;
+                var dialog = await metroWindow.ShowMessageAsync(
+                    "Błąd połączenia",
+                    $"Nie można połączyć się z bazą danych. Czy chcesz zmienić ustawienia?",
+                    MessageDialogStyle.AffirmativeAndNegative);
+
+                if (dialog != MessageDialogResult.Affirmative)
+                {
+                    Application.Current.Shutdown();
+                }
+                else
+                {
+                    var setConnectionStringWindow = new SetConnectionStringView(false);
+                    setConnectionStringWindow.ShowDialog();
+                }
+            }
+            else
+            {
+                RefreshDiary();
+                InitGroups();
+            }
+        }
 
         private void InitGroups()
         {
@@ -140,9 +175,23 @@ namespace Homework_7_1.ViewModels
         private void RefreshDiary()
         {
             Students = new ObservableCollection<StudentWrapper>(_repository.GetStudents(SelectedGroupId));
-
         }
 
-
+        public bool IsDatabaseConnectionPossible()
+        {
+            try
+            {
+                using (var context = new ApplicationDbContext())
+                {
+                    context.Database.Connection.Open();
+                    context.Database.Connection.Close();
+                }
+                return true;
+            }
+            catch (System.Data.SqlClient.SqlException)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -1,13 +1,11 @@
 ﻿using Homework_7_1.Models.Domains;
 using Homework_7_1.Models.Wrappers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
 using Homework_7_1.Models.Converters;
 using Homework_7_1.Models;
+using System.Windows;
 
 namespace Homework_7_1
 {
@@ -32,7 +30,7 @@ namespace Homework_7_1
                     .AsQueryable();
 
                 if (groupId != 0)
-                    students.Where(x => x.GroupId == groupId);
+                    students = students.Where(x => x.GroupId == groupId);
 
                 return students
                     .ToList()
@@ -107,29 +105,63 @@ namespace Homework_7_1
                 .Where(x => x.SubjectId == (int)subject)
                 .Select(x => x.Rate);
 
-            var subRatingsToDelete = subRatings.Except(newSubRatings).ToList();
-            var subhRatingsToAdd = newSubRatings.Except(subRatings).ToList();
+            var subRatingsToDelete = GetSubRatingsToDelete(subRatings, newSubRatings);
+            var subRatingsToAdd = GetSubRatingsToAdd(subRatings, newSubRatings);
 
-            subRatingsToDelete.ForEach(x =>
+            //var subRatingsToDelete = subRatings.Except(newSubRatings).ToList();
+            //var subRatingsToAdd = newSubRatings.Except(subRatings).ToList();
+
+            //subRatingsToDelete.ForEach(x =>
+            //{
+            //    var ratingToDelete = context.Ratings.First(y =>
+            //        y.Rate == x &&
+            //        y.StudentId == student.Id &&
+            //        y.SubjectId == (int)subject);
+
+            //    context.Ratings.Remove(ratingToDelete);
+            //});
+
+            //subRatingsToAdd.ForEach(x =>
+            //{
+            //    var ratingToAdd = new Rating
+            //    {
+            //        Rate = x,
+            //        StudentId = student.Id,
+            //        SubjectId = (int)subject
+            //    };
+            //    context.Ratings.Add(ratingToAdd);
+            //});
+        }
+        private static List<int> GetSubRatingsToAdd(
+            IEnumerable<int> oldSubRatings, IEnumerable<int> newSubRatings)
+        {
+            var subRatingsToAdd = new List<int>();
+            var oldListCopy = new List<int>(oldSubRatings);
+            foreach (var item in newSubRatings)
             {
-                var ratingToDelete = context.Ratings.First(y =>
-                    y.Rate == x &&
-                    y.StudentId == student.Id &&
-                    y.SubjectId == (int)subject);
+                var itemInOldList = oldListCopy.FirstOrDefault(x => x == item);
+                if (itemInOldList != 0)
+                    oldListCopy.Remove(itemInOldList);
+                else
+                    subRatingsToAdd.Add(item);
+            }
+            return subRatingsToAdd;
+        }
 
-                context.Ratings.Remove(ratingToDelete);
-            });
-
-            subhRatingsToAdd.ForEach(x =>
+        private static List<int> GetSubRatingsToDelete(
+            IEnumerable<int> oldSubRatings, IEnumerable<int> newSubRatings)
+        {
+            var subRatingsToDelete = new List<int>();
+            var newListCopy = new List<int>(newSubRatings);
+            foreach (var item in oldSubRatings)
             {
-                var ratingToAdd = new Rating
-                {
-                    Rate = x,
-                    StudentId = student.Id,
-                    SubjectId = (int)subject
-                };
-                context.Ratings.Add(ratingToAdd);
-            });
+                var itemInNewList = newListCopy.FirstOrDefault(x => x == item);
+                if (itemInNewList != 0)
+                    newListCopy.Remove(itemInNewList);
+                else
+                    subRatingsToDelete.Add(item);
+            }
+            return subRatingsToDelete;
         }
 
         public void AddStudent(StudentWrapper studentWrapper)
