@@ -111,26 +111,26 @@ namespace Homework_7_1
             //var subRatingsToDelete = subRatings.Except(newSubRatings).ToList();
             //var subRatingsToAdd = newSubRatings.Except(subRatings).ToList();
 
-            //subRatingsToDelete.ForEach(x =>
-            //{
-            //    var ratingToDelete = context.Ratings.First(y =>
-            //        y.Rate == x &&
-            //        y.StudentId == student.Id &&
-            //        y.SubjectId == (int)subject);
+            subRatingsToDelete.ForEach(x =>
+            {
+                var ratingToDelete = context.Ratings.First(y =>
+                    y.Rate == x &&
+                    y.StudentId == student.Id &&
+                    y.SubjectId == (int)subject);
 
-            //    context.Ratings.Remove(ratingToDelete);
-            //});
+                context.Ratings.Remove(ratingToDelete);
+            });
 
-            //subRatingsToAdd.ForEach(x =>
-            //{
-            //    var ratingToAdd = new Rating
-            //    {
-            //        Rate = x,
-            //        StudentId = student.Id,
-            //        SubjectId = (int)subject
-            //    };
-            //    context.Ratings.Add(ratingToAdd);
-            //});
+            subRatingsToAdd.ForEach(x =>
+            {
+                var ratingToAdd = new Rating
+                {
+                    Rate = x,
+                    StudentId = student.Id,
+                    SubjectId = (int)subject
+                };
+                context.Ratings.Add(ratingToAdd);
+            });
         }
         private static List<int> GetSubRatingsToAdd(
             IEnumerable<int> oldSubRatings, IEnumerable<int> newSubRatings)
